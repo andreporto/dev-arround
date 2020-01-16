@@ -58,13 +58,13 @@ function DevForm({onSubmit}) {
 
             <div className="input-block">
               <label htmlFor="">Latitude</label>
-              <input type="number" name="latitude" id="latitude" required value={latitude}
+              <input  name="latitude" id="latitude" required value={latitude}
               onChange={e => setLatitude(e.target.value)}/>
             </div>
 
             <div className="input-block">
               <label htmlFor="">Longitude</label>
-              <input type="number" name="logitude" id="logitude" required value={longitude}
+              <input  name="logitude" id="logitude" required value={longitude}
               onChange={e => setLongitude(e.target.value)}/>
             </div>
 
