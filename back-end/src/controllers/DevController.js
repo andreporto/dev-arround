@@ -3,6 +3,8 @@ const axios = require('axios');
 const Dev = require('../models/Dev');
 const parseStringArray = require('../utils/parseStringArray');
 
+const { findConnections, sendMessage } = require('../websocket');
+
 module.exports = {
 
   async index(req, res) {
@@ -47,11 +49,24 @@ module.exports = {
           techs: techArray,
           location
         });
+
+        // Filtrar as conexões que estão há no máximo 10km de distância e
+        // que o novo usuário tenha techs do filtro
+
+        const sendSocketMessageTo = findConnections(
+          {latitude, longitude},
+          techArray,
+        );
+
+        console.log(sendSocketMessageTo);
+
+        sendMessage(sendSocketMessageTo, 'new-dev', dev);
+        
     
         return res.json(dev);
       } catch (err) {
   
-        if (err.response.status == 404) {
+        if (err.response && err.response.status == 404) {
           return res.status(404).json({message: 'User was not found on github.com', error: err.message });
         }
     
